@@ -16,6 +16,8 @@
 typedef enum {BLUE=1, GREEN=2, CIAN=3, RED=4, PINK=5, YELLOW=6, WHITE=7} led_color;
 
 void display_init();
+void display_on(led_color cor);
+void display_off();
 void display_time(unsigned int tempo_ms);
 void display_set_color(led_color cor);
 void display_next_color();

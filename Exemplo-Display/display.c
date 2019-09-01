@@ -16,18 +16,25 @@ led_color chosen_color = WHITE;     // Inicializa como branco
 // Flag para mudanca automatica de cores
 unsigned randon_color = 0;
 
-//Inicializa os pinos
+// Inicializa os pinos
 void display_init()
 {
     P1DIR |= 0x7;      // Definindo pinos como saida
     P1OUT &= ~0x7;     // Desligando display
 }
 
-// Desliga o display e para o contador
+// Desativa timer e liga display com uma cor predeterminada
+void display_on(led_color cor)
+{
+    TB2CTL = TBCLR | MC0;   // Limpando contador e parando timer
+    P1OUT |= cor;
+}
+
+// Desliga o display e desativa timer
 void display_off()
 {
-    P1OUT &= ~0x7;     // Desligando display
-    TB2CTL = TBCLR | MC0;
+    P1OUT &= ~0x7;          // Desligando display
+    TB2CTL = TBCLR | MC0;   // Limpando contador e parando timer
 }
 
 // Configura interrupcao do timer em milissegundos
