@@ -1,18 +1,16 @@
 #include "includes.h"
 
-#define LED_BLUE    BIT0
-#define LED_GREEN   BIT1
-#define LED_RED     BIT2
-
-#define LEDS LED_RED+LED_GREEN+LED_BLUE
-
 int main(void)
 {
-	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
+	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 
-	clock_init();
-	display_init();
-	display_time(1000);
+	clock_init();               // Configurando clocks
+
+	display_init();             // Inicializando display
+	display_time(1000);         // Configurando tempo do display
+	display_enable_rand();      // Abilitando cores sequenciais
+
+	LPM0;                       // Entrando em Low Power Mode 0
 
 	return 0;
 }
