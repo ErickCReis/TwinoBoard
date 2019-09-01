@@ -44,9 +44,7 @@ void rele_time(unsigned int tempo)
     __enable_interrupt();
 }
 
-/*
-* Rotina de interrupcao do timer B1, ativada de acordo com o tempo configurado.
-*/
+// Rotina de interrupcao do timer B1, ativada de acordo com o tempo configurado.
 #pragma vector=TIMER1_B0_VECTOR
 __interrupt void TIMERB2_ISR0(void)
 {
