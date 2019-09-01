@@ -10,7 +10,7 @@
 
 #include "includes.h"
 
-#define INTERRUPT_LIMIT 1000
+#define INTERRUPT_LIMIT 10000
 
 // Cores predefinidas
 typedef enum {BLUE=1, GREEN=2, CIAN=3, RED=4, PINK=5, YELLOW=6, WHITE=7} led_color;

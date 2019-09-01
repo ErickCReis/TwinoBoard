@@ -39,7 +39,8 @@ void display_time(unsigned int tempo_ms)
                                         //               Divisor -> 1 (sem divisor)
                                         //               Modo -> UP
 
-    TB2CCR0 = 8 * tempo_ms;             // Define o tempo de ativacao
+    TB2CCR0 = 8 * (tempo_ms/10);        // Define o tempo de ativacao
+                                        // A divisao por 10 permite um alcance maior da contagem
     __enable_interrupt();
 }
 
