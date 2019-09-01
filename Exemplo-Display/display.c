@@ -37,7 +37,7 @@ void display_off()
     TB2CTL = TBCLR | MC0;   // Limpando contador e parando timer
 }
 
-// Configura interrupcao do timer em milissegundos
+// Configura interrupcao do timer B2 em milissegundos
 void display_time(unsigned int tempo_ms)
 {
     __disable_interrupt();
