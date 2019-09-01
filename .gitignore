@@ -1,7 +1,6 @@
 */*
+!*/*.pdf
 !*/*.c
 !*/*.h
 testes/
 Cronograma.md
-UserGuideMSP430FR57xx.pdf
-msp430fr5729.h
