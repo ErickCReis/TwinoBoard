@@ -2,6 +2,7 @@
 !*/*.pdf
 !*/*.c
 !*/*.h
+!*/*.md
 testes/
 Cronograma.md
 /.metadata/
