@@ -1,6 +1,12 @@
 # Exemplo Relé
 
+#### Indrodução
+
 O Twino Board conta com um transistor capaz de ativar componentes que exigem correntes elevadas, sua saída é controlada pela porta P3.3 do microcontrolador. Este exemplo conta com funções para alternar o estado do relé, além disso é possível definir intervalos específicos para alternar este estado.
+
+#### Funcionamento do código principal
+
+Troca o estado do relé a cada 10 segundos.
 
 ***
 

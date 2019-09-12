@@ -1,10 +1,16 @@
 # Exemplo Display
 
+#### Introdução
+
 O Twino Board conta com um LED RGB que pode ser configurado independentemente atráves das portas P1.0, P1.1 e P1.2. Este exemplo conta com fuções para alternar o estado do display bem como sua cor, além disso é possível definir intervalos específicos para alternar o estado do display.
+
+#### Funcionamento do código principal
+
+Pisca os LEDs em uma sequencia de cores predefinida a cada dois segundos.
 
 ***
 
-## Bibliotecas
+### Bibliotecas
 - #### clock.h
 Responsável por configurar todos os sistemas de clock do microcontrolador.
 

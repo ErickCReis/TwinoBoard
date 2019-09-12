@@ -1,6 +1,13 @@
 # Exemplo Sensor de Temperatura
 
+#### Introdução
+
 O Twino Board conta com o sensor de temperatura MCP9808 utilizando o protocolo I2C para a comunicação. Este exemplo conta com funções para fazer a comunição I2C com o módulo, bem como sua leitura e velocidade de requisão de dados. Além disso, também é possível definir a resolução dos dados obtidos pelo sensor de temperatura.
+
+#### Funcionamento do código principal
+
+Verifica se a temperatura está acima (LED na cor vermelha) ou abaixo (LED na cor verde) de 30 °C.
+A leitura é feita a cada 10 segundos, o LED na cor azul indica esse precesso.
 
 ***
 
