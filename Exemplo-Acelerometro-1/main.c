@@ -15,7 +15,7 @@ int main(void)
     volatile unsigned char status;
 
     while (1){
-        status = accel_orientation();                               // Atualizando posição
+        status = accel_status();                                    // Atualizando posição
         if((status&0x01)==0x00){                                    // Para cima
             if((status&0x06)==0x00 || (status&0x06)==0x02){         // Vertical: LED azul
                 P1OUT &= ~(BIT1 | BIT2);

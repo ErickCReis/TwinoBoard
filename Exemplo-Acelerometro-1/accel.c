@@ -17,17 +17,18 @@ void accel_init(char mode){
         TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x11, 0xC0 }, 0);    // modo de deteccao de orientacao
         wait_for_i2c_bus();
         TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2D, 0x10 }, 0);    // habilitando interrupcao na mudança de orientacao
+        Status_Addr = Orientation_Status;
     }
     else if(mode==Motion)
     {
         TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x0E, RANGE_2 }, 0);       // configurando valor do alcance
         wait_for_i2c_bus();
-        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x15, 0xF8 }, 0);          //modo de deteccao de movimento
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x15, 0xF8 }, 0);          // modo de deteccao de movimento
         wait_for_i2c_bus();
-        TI_USCI_I2C_transmit(3, (unsigned char[] ) { 0x17, 0x11, 0x10 }, 0);    //configuracao de limiar para deteccao de movimento. Esses valores podem ser modificados para alterar a sensibilidade do acelerometro
+        TI_USCI_I2C_transmit(3, (unsigned char[] ) { 0x17, 0x18, 0x02 }, 0);    // configuracao de limiar para deteccao de movimento. Esses valores podem ser modificados para alterar a sensibilidade do acelerometro
         wait_for_i2c_bus();
-        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2D, 0x04 }, 0);          //habilita interrupcao quando detecta movimento
-        wait_for_i2c_bus();
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2D, 0x04 }, 0);          // habilita interrupcao quando detecta movimento
+        Status_Addr = Motion_Status;
     }
 
     wait_for_i2c_bus();
@@ -42,13 +43,8 @@ void accel_init(char mode){
     P3IE  |= ACCEL_INT;
 }
 
-unsigned char accel_orientation(){
-    read_register(ACCEL_ADDR, 0x10, 1, 0x14);     // lendo registrador de status de orientação
-    return read_reg[0];
-}
-
-unsigned char accel_motion(){
-    read_register(ACCEL_ADDR, 0x16, 1, 0x14);     // lendo registrador de status de orientação
+unsigned char accel_status(){
+    read_register(ACCEL_ADDR, Status_Addr, 1, 0x14);     // lendo registrador de status de orientação
     return read_reg[0];
 }
 
@@ -61,7 +57,7 @@ __interrupt void p3_isr(){
     switch (P3IV){
     case P3IV_P3IFG7:                   // interrupcao de acelerometro
         __delay_cycles(500);            // debouncing
-        LPM0_EXIT;                      // retirendo o modo de baixo consumo
+        LPM0_EXIT;                      // retirando do modo de baixo consumo
         P3IFG &=~ACCEL_INT;             // desativando flag de interrupcao
         break;
     }
