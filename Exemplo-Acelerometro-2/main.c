@@ -12,10 +12,6 @@ int main(void)
     P1DIR |= BIT0 | BIT1 | BIT2;    // Inicializacao do display
     P1OUT &= ~(BIT0 | BIT1 | BIT2);
 
-    P1OUT |= BIT1;
-    __delay_cycles(1000000);    // led acende por 0.5s
-    P1OUT &=~ BIT1;
-
     volatile unsigned char status;
 
     while(1){
