@@ -1,8 +1,8 @@
 /*
  * includes.h
  *
- *  Created on: 01/09/2019
- *      Author: erickreis
+ *  Created on: 12/09/2019
+ *      Author: Erick Reis
  */
 
 #ifndef INCLUDES_H_
@@ -12,6 +12,5 @@
 #include "accel.h"
 #include "clock.h"
 #include "TI_USCI_I2C_master.h"
-
 
 #endif /* INCLUDES_H_ */

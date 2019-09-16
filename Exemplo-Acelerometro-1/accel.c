@@ -9,24 +9,29 @@
 
 void accel_init(char mode){
     wait_for_i2c_bus();
-    TI_USCI_I2C_transmitinit(ACCEL_ADDR, 20);     // iniciar I2C 400kHz
+    TI_USCI_I2C_transmitinit(ACCEL_ADDR, 0x14);     // iniciar I2C 400kHz
     wait_for_i2c_bus();
 
     if(mode==Orientation)
     {
-        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x0E, RANGE_2 }, 0);       // configurando valor da escala
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x11, 0xC0 }, 0);    // modo de deteccao de orientacao
         wait_for_i2c_bus();
-        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x11, 0b11000000 }, 0);    // modo de detecção de orientação
-        wait_for_i2c_bus();
-        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2D, 0b00010000 }, 0);    // habilitando interrupção na mudança de orientação
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2D, 0x10 }, 0);    // habilitando interrupcao na mudança de orientacao
     }
-    else
+    else if(mode==Motion)
     {
-
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x0E, RANGE_2 }, 0);       // configurando valor do alcance
+        wait_for_i2c_bus();
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x15, 0xF8 }, 0);          //modo de deteccao de movimento
+        wait_for_i2c_bus();
+        TI_USCI_I2C_transmit(3, (unsigned char[] ) { 0x17, 0x11, 0x10 }, 0);    //configuracao de limiar para deteccao de movimento. Esses valores podem ser modificados para alterar a sensibilidade do acelerometro
+        wait_for_i2c_bus();
+        TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2D, 0x04 }, 0);          //habilita interrupcao quando detecta movimento
+        wait_for_i2c_bus();
     }
 
     wait_for_i2c_bus();
-    TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2A, 0b00000001 }, 0);    // habilitando modo ativo
+    TI_USCI_I2C_transmit(2, (unsigned char[] ) { 0x2A, 0x01 }, 0);    // habilitando modo ativo
     wait_for_i2c_bus();
 
     //Configurando pino de alerta
@@ -38,7 +43,12 @@ void accel_init(char mode){
 }
 
 unsigned char accel_orientation(){
-    read_register(ACCEL_ADDR, 0x10, 1, 20);     // lendo registrado de status de orientação
+    read_register(ACCEL_ADDR, 0x10, 1, 0x14);     // lendo registrador de status de orientação
+    return read_reg[0];
+}
+
+unsigned char accel_motion(){
+    read_register(ACCEL_ADDR, 0x16, 1, 0x14);     // lendo registrador de status de orientação
     return read_reg[0];
 }
 
@@ -46,13 +56,13 @@ unsigned char accel_orientation(){
 * Rotina de interrupcao da porta 3, onde o acelerometro esta conectado
 * Simplesmente tira o processador do LPM, fazendo com que o programa continue
 */
-#pragma vector = PORT3_VECTOR
+#pragma vector=PORT3_VECTOR
 __interrupt void p3_isr(){
     switch (P3IV){
-    case P3IV_P3IFG4:           // interrupcao de acelerometro
-        __delay_cycles(500);    // debouncing
-        LPM0_EXIT;
-        P3IFG &=~ACCEL_INT;
+    case P3IV_P3IFG7:                   // interrupcao de acelerometro
+        __delay_cycles(500);            // debouncing
+        LPM0_EXIT;                      // retirendo o modo de baixo consumo
+        P3IFG &=~ACCEL_INT;             // desativando flag de interrupcao
         break;
     }
 }

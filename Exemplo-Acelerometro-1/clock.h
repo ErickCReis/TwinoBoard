@@ -2,7 +2,7 @@
  * clock.h
  *
  *  Created on: 01/09/2019
- *      Author: erickreis
+ *      Author: Erick Reis
  */
 
 #ifndef CLOCK_H_

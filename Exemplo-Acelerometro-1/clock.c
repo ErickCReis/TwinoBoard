@@ -2,7 +2,7 @@
  * clock.c
  *
  *  Created on: 01/09/2019
- *      Author: erickreis
+ *      Author: Erick Reis
  */
 
 #include "clock.h"
